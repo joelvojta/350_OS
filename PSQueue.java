@@ -1,4 +1,5 @@
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 
 //represent a Queue of PCB's managed by the Process Scheduler
 public class PSQueue 
@@ -15,14 +16,27 @@ public class PSQueue
 		theQs.add(this.theHighQ); //add to position 2 (PCB_Priority.HIGH)
 	}
 	
+	public PCB getPCBwithPriority(int priority)
+	{
+		try
+		{
+			return this.theQs.get(priority).removeFirst();
+		}
+		catch(NoSuchElementException e)
+		{
+			return PCB.PCBNotFound;
+		}
+	}
+	
 	public void addPCB(PCB p, boolean withPriority)
 	{
 		if(!withPriority)
 		{
 			theQs.get(PCB_Priority.NORMAL).addLast(p);
 		}
-		else //A priority may be specified, must be able to put it in one of three lines
+		else
 		{
+			//add with priority
 			theQs.get(p.getPriority()).addLast(p);
 		}
 	}

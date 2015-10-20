@@ -17,14 +17,9 @@ class PCB_Priority
 	static int HIGH = 2;
 }
 
-class Register
-{
-	private String name;
-	private String binaryValue;
-}
-
 public class PCB 
 {
+	static PCB PCBNotFound = null;
 	private int pid;
 	private int state;
 	private int timeSlice;
@@ -36,6 +31,7 @@ public class PCB
 	private LinkedList<Register> registerValues = new LinkedList<Register>();
 	private int programCounter = 0;
 	
+	
 	public PCB(int pid, PCB parent, LinkedList<String> instructions)
 	{
 		this.pid = pid;
@@ -45,10 +41,29 @@ public class PCB
 		this.parent = parent;
 		this.instructions = instructions;
 	}
-	
-	
-	///////////////////////////////////////////////////////////////////////////////////////
 
+	public String getValueForRegister(String registerName)
+	{
+		for(Register r : this.registerValues)
+		{
+			if(r.getName().equals(registerName))
+			{
+				return r.getBinaryValue();
+			}
+		}
+		return null;
+	}
+	
+	////////////////////////////////////////////////////////////////
+
+	public void setValueForRegisters(String registerName)
+	{
+			Register registerItem = new Register(registerName);
+			this.registerValues.add(registerItem);
+	}
+	
+	////////////////////////////////////////////////////////////////
+	
 	public int getPriority() 
 	{
 		return priority;

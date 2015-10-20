@@ -4,9 +4,6 @@ import java.util.Random;
 
 public class ProcessScheduler
 {
-	private PSQueue theJobQ = new PSQueue();
-	private PSQueue theReadyQ = new PSQueue();
-	private PSQueue theWaitingQ = new PSQueue();
 	private int currPID;
 	private Random r = new Random();
 	
@@ -32,14 +29,11 @@ public class ProcessScheduler
 		
 		//add the new PCB to the Job Q
 		theNewPCB.setPriorityHigh();
-		this.theJobQ.addPCB(theNewPCB, false);   //false --> no priority
+		QFactory.theJobQ.addPCB(theNewPCB, false);
 		System.out.println("\t*** Add PCB to Job Q");
 		
 		//add the new PCB to the Ready Q
 		theNewPCB.setStateReady();
-		this.theReadyQ.addPCB(theNewPCB, true);  //true --> priority
-		
-		//******We need to wrap our Q's in a data structure
-		
+		QFactory.theReadyQ.addPCB(theNewPCB, true);		
 	}
 }
